@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz with Timer</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #timer {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Quiz with Timer</h1>
+    <button onclick="startQuiz()">Start Quiz</button>
+    <p id="timer">Time: 0s</p>
+
+    <h2>Printing Numbers from 1 to 10</h2>
+    
+    <h3>Using for loop:</h3>
+    <p id="forLoop"></p>
+
+    <h3>Using while loop:</h3>
+    <p id="whileLoop"></p>
+
+    <h3>Using do...while loop:</h3>
+    <p id="doWhileLoop"></p>
+
+    <script>
+        let timerInterval;
+
+        function startQuiz() {
+            clearInterval(timerInterval); // Stop any existing timer
+            let timeElapsed = 0; // Reset time
+
+            document.getElementById("timer").innerText = "Time: " + timeElapsed + "s"; 
+
+            timerInterval = setInterval(() => {
+                timeElapsed++;
+                document.getElementById("timer").innerText = "Time: " + timeElapsed + "s";
+            }, 1000);
+
+            printNumbers();
+        }
+
+        function printNumbers() {
+            // Using for loop
+            let forNumbers = "";
+            for (let i = 1; i <= 10; i++) {
+                forNumbers += i + " ";
+            }
+            document.getElementById("forLoop").innerText = forNumbers;
+
+            // Using while loop
+            let whileNumbers = "";
+            let j = 1;
+            while (j <= 10) {
+                whileNumbers += j + " ";
+                j++;
+            }
+            document.getElementById("whileLoop").innerText = whileNumbers;
+
+            // Using do...while loop
+            let doWhileNumbers = "";
+            let k = 1;
+            do {
+                doWhileNumbers += k + " ";
+                k++;
+            } while (k <= 10);
+            document.getElementById("doWhileLoop").innerText = doWhileNumbers;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+/* GENERAL STYLING */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.navbar {
+    background-color: #007bff; /* Primary blue */
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Left Section (Welcome + Search Bar) */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.welcome-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+/* Search Bar */
+.nav-left form {
+    display: flex;
+    gap: 5px;
+}
+
+.nav-left input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+
+.nav-left button {
+    background-color: white;
+    color: #007bff;
+    border: 1px solid #007bff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.nav-left button:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Right Section (Navigation Links) */
+.nav-right {
+    display: flex;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links a {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+
+/* DASHBOARD CONTAINER */
+.container {
+    padding: 20px;
+    text-align: center;
+}
+
+.subject-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.subject-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+
+.chapter-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.chapter-item {
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.btn-edit, .btn-delete, .btn-add-quiz, .btn-add-chapter, .btn-add-subject {
+    display: inline-block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: white;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn-edit {
+    background: #007bff;
+}
+.btn-delete {
+    background: #dc3545;
+}
+.btn-add-quiz, .btn-add-chapter, .btn-add-subject {
+    background: #28a745;
+}
+
+.btn-edit:hover { background: #0056b3; }
+.btn-delete:hover { background: #c82333; }
+.btn-add-quiz:hover, .btn-add-chapter:hover, .btn-add-subject:hover { background: #218838; }
+
+/* RESPONSIVE DESIGN */
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .subject-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+h1{
+    color: #007bff;
+}
+button{
+    background-color: #f11414;
+    color: white;
+    border-radius: 7px;
+    border:none ;
+    padding: 7px;
+}
+.btn-manage-questions{
+    padding: 8px;
+    background-color:#007bff;
+    color: #f9f9f9;
+    text-decoration: none;
+    border-radius: 6px;
+}
+.quiz-buttons{
+    padding: 10px;
+}

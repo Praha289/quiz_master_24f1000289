@@ -1,0 +1,72 @@
+/* style.css */ 
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: #007bff;
+    margin: 10px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form {
+    background: white;
+    padding: 20px;
+    margin: 20px auto;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+/* General styles for all pages */
+body { font-family: Arial, sans-serif; }
+
+/* Admin-specific styles */
+.admin-container { background: #f8f9fa; padding: 20px; }
+
+/* User-specific styles */
+.user-dashboard { background: #ffffff; padding: 15px; }
+
+/* Quiz-specific styles */
+.quiz-container { border: 2px solid #007bff; padding: 10px; }
+
+/* Results page styles */
+.results-container { font-weight: bold; color: green; }
+

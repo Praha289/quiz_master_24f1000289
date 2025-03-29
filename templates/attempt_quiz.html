@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Attempt Quiz</title>
+    <link rel="stylesheet" href="/static/css/styleattemptquiz.css">
+</head>
+<body>
+   
+
+
+
+    <div class="quiz-container">
+        <!-- Quiz Header -->
+        <div class="quiz-header">
+            <h2>{{ quiz.title }}</h2>
+            <p class="quiz-remarks">{{ quiz.remarks }}</p>
+            <p>Time Remaining: <span id="timer">{{ remaining_time | default(60) }}</span> seconds</p>
+        </div>
+    
+        <!-- Quiz Form -->
+        <form id="quizForm" method="POST" action="{{ url_for('submit_quiz', quiz_id=quiz.id) }}">
+            {% if form %}
+                {{ form.hidden_tag() }}
+            {% endif %}
+    
+            {% set saved_answers = saved_answers or {} %}
+    
+            <div class="questions">
+                {% for question in questions %}
+                    <p class="question-text">{{ loop.index }}. {{ question.question_text }}</p>
+    
+                    {% for option in [question.option1, question.option2, question.option3, question.option4] %}
+                        <label>
+                            <input type="radio" name="answer_{{ question.id }}" value="{{ option }}"
+                                {% if saved_answers.get("answer_" ~ question.id) == option %}checked{% endif %}>
+                            {{ option }}
+                        </label>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+    
+            <button type="submit">Submit Quiz</button>
+        </form>
+    </div>
+    
+
+    <script>
+        let timeLeft = {{ remaining_time | default(60) }};
+        let timerElement = document.getElementById("timer");
+        let quizForm = document.getElementById("quizForm");
+        let submitted = false;
+
+        function updateTimer() {
+            if (timeLeft > 0) {
+                timeLeft--;
+                timerElement.innerText = timeLeft;
+            } else if (!submitted) {
+                submitted = true;
+                quizForm.submit();  // ✅ Always submit when time runs out
+            }
+        }
+
+        let timerInterval = setInterval(updateTimer, 1000);
+
+        quizForm.addEventListener("submit", function() {
+            submitted = true;
+            clearInterval(timerInterval);
+        });
+
+        // ✅ Prevent form resubmission on page refresh
+        if (performance.navigation.type === 1) { 
+            document.getElementById("quizForm").reset();
+        }
+    </script>
+</body>
+</html>

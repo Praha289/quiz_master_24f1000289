@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Chapter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylechapter.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add a New Chapter</h1>
+        <p>Fill in the details below to add a chapter.</p>
+
+        <!-- Chapter Form -->
+        <form action="{{ url_for('add_chapter') }}" method="post">
+            <input type="hidden" name="subject_id" value="{{ subject_id }}">
+
+            <label for="chapter_name">Chapter Name:</label>
+            <input type="text" id="chapter_name" name="chapter_name" placeholder="Enter chapter name" required maxlength="100" pattern="^[A-Za-z0-9\s]{3,100}$" title="Only letters, numbers, and spaces. Minimum 3 characters.">
+
+            <label for="chapter_description">Chapter Description:</label>
+            <textarea id="chapter_description" name="chapter_description" placeholder="Enter chapter description" required minlength="10" maxlength="500"></textarea>
+
+            <button type="submit" class="btn-submit">Add Chapter</button>
+        </form>
+
+        <a href="{{ url_for('admin_dashboard') }}" class="btn-back">Back to Dashboard</a>
+    </div>
+</body>
+</html>

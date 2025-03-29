@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Scores</title>
+    <link rel="stylesheet" href="/static/css/stylesallscores.css"> <!-- External CSS -->
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="#" class="logo">Quiz Portal</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('user_dashboard') }}">Home</a></li>
+            <li><a href="{{ url_for('user_quizzes') }}">My Quizzes</a></li>
+            <li><a href="{{ url_for('allscores') }}">All Scores</a></li>
+
+            <li><a href="{{ url_for('user_summary') }}">Summary</a></li>
+
+        </ul>
+        <div class="nav-right">
+            
+            <a href="{{ url_for('logout') }}"><button class="btn-logout">Logout</button></a>
+        </div>
+    </nav>
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <h1 class="main-heading">Quiz Scores</h1>
+        <p>View your scores for all attempted quizzes.</p>
+
+        <table class="scores-table">
+            <thead>
+                <tr>
+                    <th>Quiz Name</th>
+                    <th>Score</th>
+                    <th>Date Attempted</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if scores %}
+                    {% for score in scores %}
+                        <tr>
+                            <td>{{ score.quiz.title }}</td>
+                            <td>{{ score.score }}</td>
+                            <td>{{ score.date_attempted.strftime('%Y-%m-%d %H:%M') }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6">No quiz scores available.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

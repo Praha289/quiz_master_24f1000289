@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Summary</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesummary.css') }}">
+    <style>
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .chart-box {
+            width: 80%;
+            max-width: 600px;
+        }
+        #quizAttemptsChart {
+            max-width: 300px !important;  /* Reduce pie chart size */
+            max-height: 300px !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Quiz Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('all_quiz_page') }}">All Quizzes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('summary_page') }}">Summary</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="text-center">Quiz Performance Summary</h2>
+
+        <div class="chart-container">
+            <h3 class="text-center">Average and Highest Scores per Quiz</h3>
+            <div class="chart-box">
+                <canvas id="quizChart"></canvas>
+            </div>
+
+            <h3 class="text-center mt-4">Number of Attempts per Quiz</h3>
+            <div class="chart-box">
+                <canvas id="quizAttemptsChart"></canvas>
+            </div>
+        </div>
+
+        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary mt-4">Back to Dashboard</a>
+    </div>
+
+    <script>
+        // Fetch Quiz Scores API
+        fetch("/api/quiz_scores")
+            .then(response => response.json())
+            .then(quizScores => {
+                const quizNames = quizScores.map(q => q.quiz_name);
+                const avgScores = quizScores.map(q => q.avg_score);
+                const maxScores = quizScores.map(q => q.max_score);
+
+                const ctx1 = document.getElementById('quizChart').getContext('2d');
+                new Chart(ctx1, {
+                    type: 'bar',
+                    data: {
+                        labels: quizNames,
+                        datasets: [
+                            { label: 'Average Score', data: avgScores, backgroundColor: 'rgba(54, 162, 235, 0.6)' },
+                            { label: 'Highest Score', data: maxScores, backgroundColor: 'rgba(255, 99, 132, 0.6)' }
+                        ]
+                    },
+                    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                });
+            })
+            .catch(error => console.error("Error fetching quiz scores:", error));
+
+        fetch("/api/quiz_attempts")
+            .then(response => response.json())
+            .then(quizAttempts => {
+                const quizNames = quizAttempts.labels;
+                const attemptCounts = quizAttempts.attempts;
+
+                const ctx2 = document.getElementById('quizAttemptsChart').getContext('2d');
+                new Chart(ctx2, {
+                    type: 'pie',
+                    data: {
+                        labels: quizNames,
+                        datasets: [{
+                            label: 'Number of Attempts',
+                            data: attemptCounts,
+                            backgroundColor: ['rgba(255, 99, 132, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(75, 192, 192, 0.6)'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false }
+                });
+            })
+            .catch(error => console.error("Error fetching quiz attempts:", error));
+    </script>
+
+</body>
+</html>

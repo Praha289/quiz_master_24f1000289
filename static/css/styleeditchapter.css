@@ -1,0 +1,140 @@
+/* Global Body Styling */
+body {
+    font-family: Arial, sans-serif; /* Font set to Arial */
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center the content vertically */
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Container for all content */
+.container {
+    display: flex;
+    flex-direction: column; /* Stack cards vertically */
+    align-items: center; /* Center the cards */
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Card Container */
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 550px; /* Limit card width */
+}
+
+/* Heading Styling */
+h1, h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Side Headings */
+label {
+    font-weight: bold; /* Bold font for labels */
+    display: block;
+    text-align: left;
+    margin-top: 15px;
+    color: #555;
+}
+
+/* Input and Textarea Styling */
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+/* Button Styling */
+button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.3s ease;
+    width: 100%;
+}
+
+button.btn-submit {
+    background: #28a745; /* Green */
+    color: white;
+    margin-top: 20px;
+}
+
+button.btn-submit:hover {
+    background: #218838;
+}
+
+a.btn-back {
+    display: block;
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: #007bff; /* Blue */
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 6px;
+}
+
+a.btn-back:hover {
+    background: #0056b3;
+}
+
+/* Existing Quizzes List Styling */
+.quiz-list {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.quiz-list ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.quiz-list li {
+    margin: 10px 0;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quiz-list button.btn-delete {
+    background: #dc3545; /* Red */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.quiz-list button.btn-delete:hover {
+    background: #c82333;
+}
+
+/* "Back to Dashboard" button at the bottom of the page */
+.btn-back {
+    width: auto; /* Reset to default */
+    margin-top: 20px;
+    padding: 12px 20px;
+    background: #007bff; /* Blue */
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 6px;
+}

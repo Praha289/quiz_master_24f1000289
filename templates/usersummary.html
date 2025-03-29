@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Summary</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Styling for center alignment & cute layout */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            color: #007bff;
+            font-weight: bold;
+        }
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .chart-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
+            width: 45%;
+            color: #007bff;
+        }
+        canvas {
+            max-width: 100%;
+        }
+        .small-chart canvas {
+            max-width: 250px; /* Smaller Pie Chart */
+            max-height: 250px;
+            margin: auto;
+        }
+        /* Back to Dashboard Button */
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #27ae60;
+            color: white;
+
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    padding: 15px 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+./* NAVIGATION BAR */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    padding: 12px 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* LEFT SECTION - WELCOME TEXT */
+.nav-left {
+    flex: 1;
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+/* MIDDLE SECTION - NAVIGATION LINKS */
+.nav-links {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #ffd700;
+}
+
+/* RIGHT SECTION - SEARCH BOX & BUTTON */
+.nav-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;  /* Adds spacing between search and button */
+}
+
+/* SEARCH INPUT */
+.search-box {
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    outline: none;
+    width: 180px;
+}
+
+/* SEARCH BUTTON */
+.search-button {
+    background-color: #28a745;
+    color: white;
+    border-radius: 7px;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #218838;
+}
+
+/* RESPONSIVE FIXES */
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+        padding: 10px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .nav-links li {
+        margin: 8px 0;
+    }
+
+    .nav-right {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+        gap: 5px;
+    }
+
+    
+}
+button{
+    background-color: #f11414;
+    color: white;
+    border-radius: 7px;
+    border:none ;
+    padding: 10px;
+}
+
+
+        
+      
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="#" class="logo">Quiz Portal</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('user_dashboard') }}">Home</a></li>
+            <li><a href="{{ url_for('user_quizzes') }}">My Quizzes</a></li>
+            <li><a href="{{ url_for('allscores') }}">All Scores</a></li>
+
+            <li><a href="{{ url_for('user_summary') }}">Summary</a></li>
+
+        </ul>
+        <div class="nav-right">
+           
+            <a href="{{ url_for('logout') }}"><button class="btn-logout">Logout</button></a>
+        </div>
+    </nav>
+    <h2>Quiz Statistics</h2>
+
+    <!-- Charts container -->
+    <div class="chart-container">
+        <!-- Subject-wise Quiz Count (Bar Chart) -->
+        <div class="chart-box">
+            <h3>Quizzes Per Subject</h3>
+            <canvas id="subjectChart"></canvas>
+        </div>
+
+        <!-- Month-wise Quiz Attempts (Pie Chart, Smaller) -->
+        <div class="chart-box small-chart">
+            <h3>Attempts Per Month</h3>
+            <canvas id="monthChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Back to Dashboard Button -->
+    <a href="{{ url_for('user_dashboard') }}" class="back-button">Back to Dashboard</a>
+
+    <script>
+        function goBack() {
+            window.location.href = "/dashboard"; // Change URL if needed
+        }
+
+        // Get data from Flask
+        var subjectData = {{ subject_data | tojson }};
+        var monthData = {{ month_data | tojson }};
+
+        // Convert subject data to labels & values
+        var subjectLabels = Object.keys(subjectData);
+        var subjectCounts = Object.values(subjectData);
+
+        // Convert month data to labels & values
+        var monthLabels = Object.keys(monthData);
+        var monthCounts = Object.values(monthData);
+
+        // Chart for subject-wise quizzes (Bar Chart)
+        var ctx1 = document.getElementById('subjectChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: subjectLabels,
+                datasets: [{
+                    label: 'Number of Quizzes',
+                    data: subjectCounts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Chart for month-wise quiz attempts (Pie Chart, Smaller)
+        var ctx2 = document.getElementById("monthChart").getContext("2d");
+        new Chart(ctx2, {
+            type: "pie",
+            data: {
+                labels: monthLabels,
+                datasets: [{
+                    label: "Quiz Attempts",
+                    data: monthCounts,
+                    backgroundColor: [
+                        "rgba(255, 99, 132, 0.6)",
+                        "rgba(54, 162, 235, 0.6)",
+                        "rgba(255, 206, 86, 0.6)",
+                        "rgba(75, 192, 192, 0.6)",
+                        "rgba(153, 102, 255, 0.6)",
+                        "rgba(255, 159, 64, 0.6)"
+                    ],
+                    borderColor: "#ffffff",
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    </script>
+
+</body>
+</html>

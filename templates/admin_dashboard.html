@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    
+    
+ <link rel="stylesheet" href="{{ url_for('static', filename='css/styleadmindashboard.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <span class="welcome-text">Welcome, Admin</span>
+        </div>
+        <div class="nav-right">
+            <form method="GET" action="{{ url_for('admin_dashboard') }}">
+                <input type="text" name="search" placeholder="Search subject..." value="{{ search_query }}">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('all_quiz_page') }}">All Quizzes</a></li>
+            <li><a href="{{ url_for('summary_page') }}">Summary</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+        
+    </nav>
+    
+    <div class="container">
+        <h1>Welcome to Admin Dashboard</h1>
+        <p>Manage subjects, chapters, and quizzes efficiently.</p>
+        
+        <!-- Subject Cards -->
+        <div class="subject-container">
+            {% for subject in subjects %}
+            <div class="subject-card">
+                <h2>{{ subject.name }}</h2>
+                <p>{{ subject.description }}</p>
+
+                <!-- List of Chapters -->
+                <ul class="chapter-list">
+                    {% for chapter in subject.chapters %}
+                    <li class="chapter-item">
+                        <div class="chapter-info">
+                            <span class="chapter-name">{{ chapter.name }}</span>
+
+                            <!-- Buttons Container -->
+                            <div class="buttons-container">
+                                <a href="{{ url_for('edit_chapter', chapter_id=chapter.id) }}" class="btn-edit">Edit</a>
+                        
+                                <form action="{{ url_for('delete_chapter', chapter_id=chapter.id) }}" method="post" class="delete-form">
+                                    <button type="submit" class="btn-delete">Delete</button>
+                                </form>
+                                
+                                <!-- Add Quiz Button -->
+                                <a href="{{ url_for('add_quiz_page', subject_id=subject.id, chapter_id=chapter.id) }}" class="btn-add-quiz">
+                                    Add Quiz
+                                </a>
+                            </div>
+                        </div>
+
+                        <p class="chapter-description"><strong>Description:</strong> {{ chapter.description }}</p>
+
+                        <!-- Quiz List -->
+                        {% if chapter.quizzes %}
+                        <div class="quiz-list">
+                            {% for quiz in chapter.quizzes %}
+                            <div class="quiz-item">
+                                <div class="quiz-info">
+                                    <div class="quiz-title">{{ quiz.title }}</div>
+                                    <div class="quiz-duration">Duration: {{ quiz.time_duration }} mins</div>
+                                </div>
+                                
+                                <!-- Manage Questions Button -->
+                                <div class="quiz-buttons">
+                                    <a href="{{ url_for('manage_questions', chapter_id=chapter.id, quiz_id=quiz.id) }}" class="btn-manage-questions">
+                                        Manage Questions
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="no-quiz">No quizzes added yet.</p>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Add Chapter Button -->
+                <a href="{{ url_for('add_chapter', subject_id=subject.id) }}" class="btn-add-chapter">+ Add Chapter</a>
+                <br>
+                <br>
+                <!-- Delete Subject Button -->
+                <form action="{{ url_for('delete_subject', subject_id=subject.id) }}" method="post">
+                    <button type="submit" class="btn-delete">Delete Subject</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Add Subject Button -->
+        <div class="add-subject-container">
+            <a href="{{ url_for('add_subject_page') }}" class="btn-add-subject">+ Add Subject</a>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,23 @@
+/* Custom Styling for Admin Login Page */
+
+body {
+    background-color: #f8f9fa; /* Light gray background */
+    font-family: Arial, sans-serif;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 500px; /* Increased width */
+    padding: 50px; /* More padding */
+    background: #fff;
+    border-radius: 12px;
+}
+
+.card h2 {
+    color: #343a40;
+    padding:20px; /* Dark gray text */
+}
+
+.btn {
+    font-size: 20px;
+}

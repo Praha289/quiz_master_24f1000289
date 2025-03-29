@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Chapter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleeditchapter.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Edit Chapter Card -->
+        <div class="card">
+            <h1>Edit Chapter</h1>
+            <form action="{{ url_for('edit_chapter', chapter_id=chapter.id) }}" method="post">
+                <!-- Edit Chapter -->
+                <label for="chapter_name">Chapter Name:</label>
+                <input type="text" id="chapter_name" name="chapter_name" value="{{ chapter.name }}" required>
+
+                <label for="chapter_description">Chapter Description:</label>
+                <textarea id="chapter_description" name="chapter_description" required>{{ chapter.description }}</textarea>
+
+                <button type="submit" class="btn-submit">Save Changes</button>
+            </form>
+        </div>
+
+        <!-- Existing Quizzes Card -->
+        <div class="card">
+            <h2>Existing Quizzes</h2>
+            <div class="quiz-list">
+                {% if quizzes %}
+                    <ul>
+                        {% for quiz in quizzes %}
+                        <li>
+                            <strong>{{ quiz.title }}</strong> ({{ quiz.time_duration }} mins)
+                            <form action="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" method="post" class="delete-form">
+                                <button type="submit" class="btn-delete">Delete</button>
+                            </form>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No quizzes added yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Back to Dashboard Button -->
+        <a href="{{ url_for('admin_dashboard') }}" class="btn-back">Back to Dashboard</a>
+    </div>
+</body>
+</html>

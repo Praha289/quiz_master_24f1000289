@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Quiz Scores</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stylescores.css') }}">
+</head>
+<body>
+    <h1>Quiz Master - Scores</h1>
+    <h2>Quiz: {{ quiz.title }}</h2>
+
+    <table border="1">
+        <tr>
+            <th>User ID</th>
+            <th>Full Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Qualification</th>
+            <th>DOB</th>
+            <th>Score</th>
+            <th>Date Attempted</th>
+        </tr>
+        {% for score, user in scores %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.full_name }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.qualification or 'N/A' }}</td>
+            <td>{{ user.dob or 'N/A' }}</td>
+            <td>{{ score.score }}</td>
+            <td>{{ score.date_attempted }}</td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="8">No scores available</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="{{ url_for('admin_dashboard') }}"><button>Back to Dashboard</button></a>
+</body>
+</html>

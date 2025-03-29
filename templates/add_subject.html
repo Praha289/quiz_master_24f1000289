@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Subject</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleaddsubject.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Add a New Subject</h1>
+            <p>Fill in the details below to add a subject.</p>
+
+            <form action="{{ url_for('add_subject') }}" method="post">
+                <label for="subject_name">Subject Name:</label>
+                <input type="text" id="subject_name" name="subject_name" placeholder="Enter subject name" required>
+
+                <label for="subject_description">Subject Description:</label>
+                <textarea id="subject_description" name="subject_description" placeholder="Enter subject description" required></textarea>
+
+                <button type="submit" class="btn-submit">Add Subject</button>
+            </form>
+
+            <a href="{{ url_for('admin_dashboard') }}" class="btn-back">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

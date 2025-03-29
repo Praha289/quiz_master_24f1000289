@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styleaddquiz.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Add a Quiz for "{{ chapter.name }}"</h1>
+        <p>Fill in the details below to create a quiz.</p>
+
+        <!-- Quiz Form -->
+        <form action="{{ url_for('add_quiz') }}" method="post">
+            <!-- Hidden Inputs for Subject and Chapter -->
+            <input type="hidden" name="subject_id" value="{{ chapter.subject_id }}">
+            <input type="hidden" name="chapter_id" value="{{ chapter.id }}">
+
+            <!-- Quiz Title -->
+            <label for="quiz_title">Quiz Title:</label>
+            <input type="text" id="quiz_title" name="quiz_name" placeholder="Enter quiz title" required>
+
+            <!-- Time Duration -->
+            <label for="time_duration">Time Duration (minutes):</label>
+            <input type="number" id="time_duration" name="time_duration" placeholder="Enter duration" required>
+
+            <!-- Remarks (Optional) -->
+            <label for="remarks">Remarks (Optional):</label>
+            <textarea id="remarks" name="remarks" placeholder="Enter any remarks"></textarea>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-submit">Add Quiz</button>
+        </form>
+
+        <!-- Back Button -->
+        <a href="{{ url_for('admin_dashboard') }}" class="btn-back">Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+/* Navbar Styling */
+.navbar {
+    background-color: #007bff; /* Primary blue */
+    padding: 12px 20px;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.navbar-toggler {
+    border: none;
+    outline: none;
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.navbar-nav .nav-item {
+    margin: 0 10px;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 8px 15px;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Chart Container */
+.chart-container {
+    display: flex; 
+    flex-direction: row; /* Align charts in a row */
+    justify-content: center; /* Center the charts horizontally */
+    align-items: flex-start; /* Align to the top */
+    gap: 20px; /* Space between charts */
+    margin-top: 20px;
+    width: 100%;
+    flex-wrap: nowrap; /* Prevent wrapping */
+}
+
+/* Chart Box */
+.chart-box {
+    width: 45%; /* Ensure charts take almost half the space */
+    max-width: 500px; /* Set a max width */
+    height: 350px; /* Set a fixed height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Fix for Canvas */
+.chart-box canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+/* Responsive View */
+@media (max-width: 991px) {
+    .chart-container {
+        flex-direction: column; /* Stack charts on smaller screens */
+        align-items: center;
+    }
+
+    .chart-box {
+        width: 90%; /* Take full width on small screens */
+    }
+}

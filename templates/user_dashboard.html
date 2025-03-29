@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/static/css/stylesuserdashboard.css"> <!-- Link to external CSS -->
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="#" class="logo">Quiz Portal</a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="{{ url_for('user_quizzes') }}">My Quizzes</a></li>
+            <li><a href="{{ url_for('allscores') }}">All Scores</a></li>
+
+            <li><a href="{{ url_for('user_summary') }}">Summary</a></li>
+
+        </ul>
+        <div class="nav-right">
+            <form method="GET" action="{{ url_for('user_dashboard') }}" class="search-form">
+                <input type="text" class="search-box" name="search" placeholder="Search subjects..." value="{{ search_query }}">
+                <button type="submit" class="btn-search">Search</button>
+            </form>
+            <a href="{{ url_for('logout') }}"><button class="btn-logout">Logout</button></a>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <h1 class="main-heading">Welcome to the Quiz Portal</h1>
+        <p>Select a quiz to attempt or view your scores.</p>
+
+        <h2>Available Subjects</h2>
+        <div class="subject-container">
+            {% if subjects %}
+                {% for subject in subjects %}
+                    <div class="subject-card">
+                        <h2>{{ subject.name }}</h2>
+                        <p><em>{{ subject.description }}</em></p>
+
+                        <h3>Chapters</h3>
+                        <ul class="chapter-list">
+                            {% if subject.chapters %}
+                                {% for chapter in subject.chapters %}
+                                    <li class="chapter-item">
+                                        <div class="chapter-info">
+                                            <span class="chapter-name">{{ chapter.name }}</span>
+                                            <p class="chapter-description"><em>{{ chapter.description }}</em></p>
+                                        </div>
+
+                                        <h4>Quizzes</h4>
+                                        <ul class="quiz-list">
+                                            {% if chapter.quizzes %}
+                                                {% for quiz in chapter.quizzes %}
+                                                    <li class="quiz-item">
+                                                        <div class="quiz-info">
+                                                            <span class="quiz-title">{{ quiz.title }}</span>
+                                                            <p class="quiz-duration">{{ quiz.time_duration }} mins</p>
+                                                        </div>
+                                                        <div class="quiz-buttons">
+                                                            <a href="{{ url_for('start_quiz', quiz_id=quiz.id) }}" class="btn-attempt">Attempt Quiz</a>
+                                                            <a href="{{ url_for('view_quiz_scores', quiz_id=quiz.id) }}" class="btn-view">View Scores</a>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+                                            {% else %}
+                                                <li>No quizzes available</li>
+                                            {% endif %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            {% else %}
+                                <li>No chapters available</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No subjects available</p>
+            {% endif %}
+        </div>
+    </div>
+
+</body>
+</html>

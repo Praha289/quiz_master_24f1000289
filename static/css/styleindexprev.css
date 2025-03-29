@@ -1,0 +1,25 @@
+/* Custom Styling for Quiz Master Home Page */
+
+body {
+    background-color: #f8f9fa; /* Light background */
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    color: #343a40; /* Dark gray title */
+    font-weight: bold;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn {
+    width: 250px; /* Uniform button width */
+    padding: 10px;
+    font-size: 18px;
+}
